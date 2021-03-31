@@ -1,0 +1,170 @@
+{{!-- <link rel="stylesheet" href="css/contact.css">
+<section>
+    <div class="contact-wrap">
+        <div class="contact-inside">
+            <div class="contact-from">
+
+                <div class="left-con">
+                    <div class="heading">
+                        <span class="smallheading">Contact </span>
+                        <h5>Form</h5>
+                    </div>
+                    <form action="/contact-us/" method="post" name="register-form" id="register-form"
+                        class="ng-pristine ng-valid">
+                        <input type="hidden" name="csrfmiddlewaretoken"
+                            value="aSm3mhpuvSmT8E4diF7VnEnmpjKJMltY7UWegb3PplZBgrgQBGlKCLY070EBUC0t">
+                        <span class="register-cout "> <label ng-class="class" class="label"> </label>
+                            <input type="text" name="firstName" id="firstName" placeholder="First Name" value=""
+                                class="shake"></span>
+                        <span class="register-cout"><label ng-class="class" class="label"> </label>
+                            <input type="text" name="lastName" id="lastName" placeholder="Last Name" value=""></span>
+                        <span class="register-cout">
+                            <label ng-class="class" class="label"></label>
+                            <input type="text" name="contactNumber" maxlength="10" id="contactNumber"
+                                placeholder="Contact Number" value=""></span>
+                        <span class="register-cout">
+                            <label ng-class="class" class="label"></label>
+                            <input type="text" name="email" id="email" placeholder="Your Email" value=""></span>
+
+                        <span class="register-cout">
+                            <textarea placeholder="Comment" value="" name="comment" id="commentU"></textarea>
+                        </span>
+                        <input type="submit" value="SUBMIT" name="SUBMIT" id="submit" class="button-slide">
+                        <div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="right-contact">
+                    <div class="heading">
+                        <span class="smallheading">Contact </span>
+                        <h5>Information</h5>
+                    </div>
+                    <p><strong style="font-size:14px;text-transform:uppercase; ">We Love Hearing From You!</strong><br>
+
+                        If you have any questions, please fill your queries in the form &amp; we'll get back to you
+                        shortly.</p>
+                    <div class="content-cotact">
+                        <ul>
+                            <li>
+                                <h6>Address</h6>
+                                <p>Coolwinks Technologies Private Limited, Plot A-8, Infocity 1, Sector 34, Gurugram,
+                                    Haryana 122001 India</p>
+                            </li>
+                            <li>
+                                <h6>Email</h6>
+                                <p><a href="mailto:support@coolwinks.com">support@coolwinks.com</a><br>
+                                    <strong>Available 24x7</strong>
+                                </p>
+                            </li>
+                            <li>
+                                <h6>Phone No </h6>
+                                <p>0124-444-5800<br>
+                                    <strong>9.30 AM to 6:30 PM ( Monday to Sunday )</strong>
+                                </p>
+                            </li>
+                            <li>
+                                <h6>Social media</h6>
+                                <div class="follow">
+
+                                    <div class="contact-social-icons"><a href="https://www.facebook.com/coolwinks"
+                                            data-title="Facebook" class="tooltip expand" target="_blank"><i
+                                                class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                                        <a href="https://twitter.com/coolwinks_com" data-title="Twitter"
+                                            class="tooltip expand" target="_blank"> <i class="fa fa-twitter-square"
+                                                aria-hidden="true"></i></a> <a
+                                            href="https://www.pinterest.com/coolwinks" data-title="Pintrest"
+                                            class="tooltip expand" target="_blank"><i class="fa fa-pinterest-square"
+                                                aria-hidden="true"></i></a> <a
+                                            href="https://www.instagram.com/coolwinks_com" data-title="Instagram"
+                                            class="tooltip expand" target="_blank"><i class="fa fa-instagram"
+                                                aria-hidden="true"></i></a> <a
+                                            href="https://www.youtube.com/c/coolwinks" data-title="Youtube"
+                                            class="tooltip expand" target="_blank"><i class="fa fa-youtube-square"
+                                                aria-hidden="true"></i></a>
+
+
+                                    </div>
+
+                                </div>
+
+                            </li>
+                            <li>
+                                <h6>GRIEVANCE OFFICER</h6>
+                                <p><strong>NAME</strong> : Kapil Raghav<br>
+                                    <!-- <strong>PHONE NO.</strong> 9311406303<br/> -->
+                                    <strong>EMAIL- ID</strong> : grievance@coolwinks.com<br>
+                                    <strong>9.30 AM to 6:30 PM ( Monday to Friday )</strong>
+                                </p>
+                            </li>
+                            <li>
+                                <h6>NODAL OFFICER</h6>
+                                <p><strong>NAME</strong> : Bharat Kumar<br>
+                                    <!-- <strong>PHONE NO.</strong>  9311406304<br/> -->
+                                    <strong>EMAIL- ID</strong> : nodalofficer@coolwinks.com<br>
+                                    <strong>9.30 AM to 6:30 PM ( Monday to Friday )</strong>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submit").click(function (e) {
+
+            var fname = document.getElementById("firstName").value;
+            var lname = document.getElementById("lastName").value;
+            var phoneNo = document.getElementById("contactNumber").value;
+            var emailUser = document.getElementById("email").value;
+            var commentUser = document.getElementById("contactNumber").value;
+
+
+            if ((!/^[a-zA-Z0-9]+$/.test(fname)) && fname == "") {
+                $("#firstName").focus();
+                $("#firstName").addClass('shake');
+                alert("Please Enter First Name");
+                return false;
+            }
+            if ((!/^[a-zA-Z0-9]+$/.test(lname)) && lname == "") {
+                $("#lastName").focus();
+                $("#lastName").addClass('shake');
+                alert("Please Enter Last Name");
+                return false;
+            }
+
+            if ((!/^[789]\d{9}$/.test(phoneNo)) || phoneNo == "") {
+
+                $("#contactNumber").addClass('shake');
+                $("#contactNumber").focus();
+                alert("Enter a valid Phone Number");
+
+                return false;
+
+            }
+
+
+            if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailUser) || emailUser == "") {
+
+                $("#email").addClass('shake');
+                $("#email").focus();
+                alert("Enter Valid Email-ID");
+                return false;
+            }
+
+            if ((!/^[a-zA-Z0-9]+$/.test(commentUser)) && commentUser == "") {
+                $("#commentU").focus();
+                $("#commentU").addClass('shake');
+                alert("Please enter your valuable comments");
+                return false;
+            }
+
+            alert("Your comments have been saved");
+        });
+    });
+
+</script> --}}

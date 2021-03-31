@@ -1,0 +1,55 @@
+
+   <button class="btn btn-danger pull-left" style="float: right;margin: 1%;"> 
+        <a href="/logout" style="text-decoration: none;color: #fff;"> Logout </a>
+    </button>
+<button class="btn btn-primary pull-left" style="float: right;margin: 1%;"> 
+    <a href="/customers" style="text-decoration: none;color: #fff;"> Customer </a>
+</button>
+  <h2>{{title}}</h2>
+  <a href="/product_add" class="btn btn-success">Product Add</a>
+  <br /><br />
+         {{#if message}}
+            <div class="alert {{messageClass}}" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+  <table class="table" id="product_list">
+    <thead>
+        <tr>
+        <th>#ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Size</th>
+        <th>Lance Number</th>
+        <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.size}}</td>
+            <td>{{this.lance_number}}</td>
+            <td>
+                <a href="/deleteproduct/{{this.id}}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+  </table>
+    <script>
+      $(document).ready(function() {
+        $('#product_list').DataTable({
+            aoColumnDefs: [
+                {
+                    bSortable: false,
+                    aTargets: [ -1 ]
+                }
+            ]
+        });
+    });
+  </script>

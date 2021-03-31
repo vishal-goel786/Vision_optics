@@ -1,0 +1,143 @@
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+        <label for="cust_name"> Select Customer</label>
+        <select name="cust_name" class="form-control cust_name" id="cust_name" style="width: 50%;">    
+            {{#each customer}}
+                <option value="{{this.customer_id}}">{{this.firstname}}</option>
+            {{/each}}
+        </select>
+    <div class="row mt-5">
+        {{#each products}} 
+        <div class="col-sm-4">
+             <form method="POST">
+            <div class="card"> <img src="uploads/{{this.image}}" class="card-img-top" width="100%">
+                
+                <div class="card-body pt-0 px-0">
+                    <h5 class="card-title text-center">{{this.name}}</h5>
+                    <div class="d-flex flex-row justify-content-between mb-0 px-3"> <small class="text-muted mt-1">PRICE</small>
+                        <h6>&dollar;{{this.price}}&ast;</h6>
+                    </div>
+                    <hr class="mt-2 mx-3">
+                    <div class="d-flex flex-row justify-content-between px-3 pb-4">
+                        <div class="d-flex flex-column"><span class="text-muted">Lance Number</span></div>
+                        <div class="d-flex flex-column">
+                            <h5 class="mb-0">{{this.lance_number}}</h5>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-between p-3 mid">
+                        <div class="col-md-6">
+                            <small>Pair Of Lance</small>
+                            <div class="d-flex flex-row dis_data">
+                                    <input type="button" class="btn btn-success decrement" data-id="{{this.id}}" value="-" />&nbsp;
+                                    <input type="text" name="quantity" class="text-center" value="1" maxlength="2" max="10" size="1" class="number" id="number_{{this.id}}"/>&nbsp;
+                                    <input type="button" class="btn btn-success incriment"  data-id="{{this.id}}" value="+" />
+                                    <input type="hidden" class="price_{{this.id}}" value="{{this.price}}">
+                                    <input type="hidden" class="name_{{this.id}}" value="{{this.name}}">
+                                    <input type="hidden" class="description_{{this.id}}" value="{{this.description}}">
+                                    <input type="hidden" class="image_{{this.id}}" value="{{this.image}}">
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="d_day" >delivery day </label>
+                            <select name="d_day" id="d_day_{{this.id}}" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div> <small class="text-muted key pl-3"></small>
+                    <div class="mx-3 mt-3 mb-2"><button  type="button" data-id="{{this.id}}" class="btn btn-danger btn-block pay_now"><small>Buy Now</small></button></div> <small class="d-flex justify-content-center text-muted">*Legal Disclaimer</small>
+                </div>
+            </div>
+            <input type="hidden" class="payment_id" name="payment_id" value="{{this.id}}">
+            </form>
+        </div>
+        {{/each}}
+         {{#each customer}}
+            <input type="hidden" name="cus_fname" id="cust_fname_{{this.customer_id}}" value="{{this.firstname}}">
+            <input type="hidden" name="cus_email" id="cust_email_{{this.customer_id}}" value="{{this.email}}">
+            <input type="hidden" name="cus_phone" id="cust_phone_{{this.customer_id}}" value="{{this.phone_number}}">
+        {{/each}}
+    </div>
+    <script type="text/javascript">
+    $('.incriment').on('click',function(){
+        var id = $(this).attr('data-id');
+        var value = parseInt(document.getElementById('number_'+id).value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value<10){
+            value++;
+                document.getElementById('number_'+id).value = value;
+        }
+    });
+    $('.decrement').on('click',function(){
+        var id = $(this).attr('data-id');
+        var value = parseInt(document.getElementById('number_'+id).value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value>1){
+            value--;
+                document.getElementById('number_'+id).value = value;
+        }
+    });
+
+</script>
+<script>
+          const paymentHandler = (res) => {
+            console.log(res.razorpay_payment_id);
+            console.log(res.razorpay_order_id);
+            console.log(res.razorpay_signature);
+            console.log(res);
+          }
+      function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+$('.pay_now').on('click',function(e){
+        var id = $(this).attr('data-id');
+        var quantity = $('#number_'+id).val(); 
+        var price = $('.price_'+id).val(); 
+        var p_name = $('.name_'+id).val(); 
+        var d_day = $('#d_day_'+id).val(); 
+        var description = $('.description_'+id).val();
+        var image = $('.image_'+id).val(); 
+        var total = price * quantity;
+        var cust_id = $('#cust_name').val();
+        var name = $('#cust_fname_'+cust_id).val();
+        var email = $('#cust_email_'+cust_id).val();
+        var phone = $('#cust_phone_'+cust_id).val();
+    var options = {
+        key: "rzp_test_4Ul7qSZnvkrOzc",
+        amount: total * 100,
+        currency: "USD",
+        name: "Vision Optics",
+        description: "Vision Optics Contest",
+        image: "images/download.jfif",
+        handler: function (response) {    
+            setCookie('cookiedata',JSON.stringify({product_id: id, price: price, total_price: total,payment_id: response.razorpay_payment_id,quntity : quantity,currency : 'USD', cust_id : cust_id, cust_name : name, cust_email : email, cust_phone : phone,p_name:p_name,description:description,image:image,d_day:d_day}), 1)
+            location.replace("http://localhost:8000/success")
+        },
+        prefill: {
+          name: name,
+          email: email,
+          contact: phone,
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#ffc107",
+        },
+      };
+var rzp1 = new Razorpay(options);
+     rzp1.open();
+    e.preventDefault();
+});
+/*document.getElementById('pay_now_'+id).onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}*/
+</script>

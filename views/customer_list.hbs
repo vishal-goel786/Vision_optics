@@ -1,0 +1,60 @@
+
+<button class="btn btn-danger pull-left" style="float: right;margin: 1%;"> 
+    <a href="/logout" style="text-decoration: none;color: #fff;"> Logout </a>
+</button>
+<button class="btn btn-primary pull-right" style="float: right;margin: 1%;"> 
+    <a href="/products" style="text-decoration: none;color: #fff;"> Products </a>
+</button>
+  <h2>{{title}}</h2>
+  <a href="/customer_add" class="btn btn-success">Create Customer</a>
+  <br /><br />
+         {{#if message}}
+            <div class="alert {{messageClass}}" role="alert">
+                {{message}}
+            </div>
+        {{/if}}
+  <table class="table" id="customer_list">
+    <thead>
+        <tr>
+        <th>#ID</th>
+        <th>Customer Name</th>
+        <th>Glass Name</th>
+        <th>Lance Number</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Quntity</th>
+        <th>Price</th>
+        <th style="width: 100px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each customers}}
+        <tr>
+            <td>{{@index}}</td>
+            <td>{{this.firstname}}</td>
+            <td>{{this.glass_name}}</td>
+            <td>{{this.lance_number}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone_number}}</td>
+            <td>{{this.quntity}}</td>
+            <td>{{this.price}}</td>
+            <td>
+                <a href="/edit/{{this.customer_id}}" class="btn btn-info btn-sm">Edit</a>
+                <a href="/delete/{{this.customer_id}}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+  </table>
+    <script>
+      $(document).ready(function() {
+        $('#customer_list').DataTable({
+            aoColumnDefs: [
+                {
+                    bSortable: false,
+                    aTargets: [ -1 ]
+                }
+            ]
+        });
+    });
+  </script>
